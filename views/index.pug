@@ -3,8 +3,11 @@ extends layout
 block content
     h1= title
     p Vitajte v nápovedách pre 13. záhradu
-    form(method='POST' action='/login')
-        div.form-group
-            label(for='pin') PIN:
-            input#name.form-control(type='text', placeholder='12345' name='PIN')
-    p Pokiaľ nemáte PIN, tak kontaktujte správcov 13. záhrady.
+    div(id='login-page')
+        form(method='POST' action='/login')
+            div.form-group
+                label(for='pin') PIN:
+                input#name.form-control(type='text', placeholder='12345' name='PIN')
+        p Pokiaľ nemáte PIN, tak kontaktujte správcov 13. záhrady.
+    div(id='hints-page')
+        ul(id='hints')

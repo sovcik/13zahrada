@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1= title
+    div(id="login-page")
+        form(method='POST' action='/settings')
+            div.form-group
+                label(for='Password') Heslo administrátora:
+                input#name.form-control(type='password', placeholder='12345' name='Password')
