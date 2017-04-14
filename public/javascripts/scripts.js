@@ -32,15 +32,49 @@ function loadTitles(){
                 console.log("No hint titles loaded");
             else {
                 console.log("Hint titles loaded "+res.titles.count);
-                $("#hints").empty();
+                //$("#hints-page").empty();
                 for (var i=0;i<res.titles.length;i++){
-                    $("#hints").append('<option value="'+res.titles[i]._id+'">'+res.titles[i].title+'</option>');
+                    var id=res.titles[i]._id;
+                    var onClick="loadHint(1,"+id+",'L0"+id+"');";
+                    console.log(onClick);
+                    $("#hints-page").append('<div id="L0'+id+'" class="hint hintL0" onclick="'+onClick+'">'+res.titles[i].title+'</div>');
                 }
             }
             console.log("Loaded");
         })
         .fail(function () {
             console.log("Loading failed");
+        });
+
+}
+
+function loadHint(level,id,sender){
+    "use strict";
+    console.log("Loading L"+level+" for id="+id+" sender="+sender);
+    $.post("/", {cmd:'loadHint', level:level, id:id},
+        function (res) {
+            //var text="L"+level+" "+id;
+            if (res.result == null || res.result == "error")
+                console.log("No hint found");
+            else {
+                if (res.hint.trim() == ""){
+                    console.log("Empty hint found - ignoring");
+                    return;
+                }
+                var text = res.hint;
+                var onClick = "loadHint(" + (level + 1) + "," + id + ",'L" + level + id + "');";
+                var elm = '<div id="L' + level + id + '" class="hint hintL' + level + '" onclick="' + onClick + '">' + text + '</div>';
+                console.log(elm);
+                //$("#L"+(level-1)+id).append('<div id=L'+level+id+' class="hint hintL'+level+'" onclick="'+onClick+'">'+text+'</div>');
+
+                // show next hint
+                $("#" + sender).append(elm);
+                // disable click for already clicked hints
+                $("#" + sender).prop('onclick', '');
+            }
+        })
+        .fail(function () {
+            console.log("Loading hint failed");
         });
 
 }

@@ -1,8 +1,33 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+body, input {
+    padding: 10pt;
+    font: 14pt "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+option {
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+}
+
+.hint {
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+}
+
+.hintL0 {
+    margin:3pt;
+    background-color: beige;
+    padding-left: 10pt;
+    padding-right: 10pt;
+}
+
+.hintL1 {
+    background-color: cornsilk;
+}
+
+.hintL2 {
+    background-color: aliceblue;
 }

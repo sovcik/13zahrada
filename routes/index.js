@@ -23,6 +23,12 @@ router.post('/', async function(req, res, next) {
             console.log('Titles length='+titles.length);
             r = {result:"ok",titles:titles,status:200};
             break;
+        case 'loadHint':
+            console.log('cmd=loadHint');
+            var text = await dataAPI.getHint(req.body.id,req.body.level);
+            r = {result:"ok",hint:text,status:200};
+            break;
+
         default:
             console.log('cmd=unknown');
             break;

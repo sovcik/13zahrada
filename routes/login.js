@@ -4,7 +4,8 @@ var mongoDB = require('../lib/dataAPI');
 
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-    mongoDB.log2db('logged in');
+    var pin="112233";
+    mongoDB.log2db(pin,'login','logged in');
     res.send('respond with a resource');
 });
 
