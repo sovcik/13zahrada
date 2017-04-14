@@ -1,9 +1,41 @@
 var express = require('express');
+var dataAPI = require('../lib/dataAPI.js');
+var assert = require('assert');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: '13. záhrada' });
+    res.render('index', { title: '13. záhrada' });
 });
+
+router.post('/', async function(req, res, next) {
+    if (!req.body.cmd){
+        console.log('Wrong post. Missing CMD.');
+        next();
+    }
+
+    var r = {result:'error',errorMsg:'Unknown command',status:200};
+
+    switch (req.body.cmd){
+        case 'loadTitles':
+            console.log('cmd=loadTitles');
+            var titles = await dataAPI.getHintTitles();
+            console.log('Titles length='+titles.length);
+            r = {result:"ok",titles:titles,status:200};
+            break;
+        default:
+            console.log('cmd=unknown');
+            break;
+    }
+
+    console.log("result "+JSON.stringify(r));
+
+    res.json(r);
+    //res.end({result:'error',errorMsg:'something happened',status:200});
+
+});
+
+
+
 
 module.exports = router;

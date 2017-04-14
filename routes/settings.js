@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
     console.log(req.body);
     dataStore.saveHints(req.body.hints);
-    res.end('{"success" : "Updated Successfully", "status" : 200}');
+    res.end('{"result" : "ok", "status" : 200}');
 });
 
 module.exports = router;
