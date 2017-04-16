@@ -10,6 +10,7 @@ router.post('/', async function(req, res, next) {
     console.log("/admin - post");
     console.log(req.body);
     var ret = true;
+    var r = {"result":"error", "status":200};
     switch (req.body.cmd){
         case 'saveHints':
             console.log('Going to save hints');
@@ -29,6 +30,18 @@ router.post('/', async function(req, res, next) {
                 else
                     res.end('{"result":"error", "status":200}');
             });
+            break;
+        case 'getActivePins':
+            console.log('Going to get active PINs');
+            dataStore.getActivePINs(function (err, pins){
+                ret = (err == null);
+                console.log('getActivePINs result='+pins.length);
+                if (ret)
+                    r = {"result":"ok", "pins":pins, "status":200};
+                res.json(r);
+                res.end();
+            });
+
             break;
     }
 

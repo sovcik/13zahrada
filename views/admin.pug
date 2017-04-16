@@ -2,7 +2,8 @@ extends layout
 
 block content
     h1= title
-    div(id="pin-page")
+    hr
+    div(id="pin-page" class="page")
         p Toto je zoznam aktuálne aktívnych PINov.
         table(id="active-pins")
             tr
@@ -13,10 +14,13 @@ block content
                 td 1122334
         label(for='newPin') PIN:
         input#newPin(type='text', placeholder='12345' name='newPin' maxlength=10)
-        button(id="saveNewPin") Pridať
-    div(id="hint-page")
+        button(id="saveNewPin") Pridať aktívny PIN
+        span(id="addPinStatus" class="statusMsg")
+    hr
+    div(id="hint-page" class="page")
         p Tu môžete modifikovať nápovedy pre 13. záhradu
         textarea(id="newHintsText" rows="20" cols="80" placeholder="Nové nápovedy vložte sem a kliknite Uložiť.")
-        button(id="saveHints") Uložiť
+        button(id="saveHints") Uložiť nové nápovedy
+        span(id="saveHintsStatus" class="statusMsg")
         script.
             initAdmin();

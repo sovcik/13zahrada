@@ -4,7 +4,6 @@
 
 function initAdmin(){
     console.log("/admin - Initializing");
-    console.log($("#saveHints"));
     $("#saveHints").on(
         "click",
         function () {
@@ -36,9 +35,13 @@ function initAdmin(){
             if (selText.val().trim() != '') {
                 console.log("Posting new PIN to server ");
                 $.post("/admin", {cmd: 'addPin', pin: selText.val()}, function (res) {
-                    selStatus.text('Uložené.');
-                    selStatus.css("display", "inline").fadeOut(2000);
-                    console.log("Saved");
+                    if (res.result === 'ok') {
+                        selStatus.text('Uložené.');
+                        selStatus.css("display", "inline").fadeOut(2000);
+                        console.log("Saved");
+                    } else {
+                        selStatus.text('Chyba. Skontrolujte, či rovnaký PIN ešte nie je aktívny');
+                    }
                 })
                     .fail(function () {
                         selStatus.text('Nepodarilo sa uložiť.');
@@ -51,9 +54,57 @@ function initAdmin(){
         }
     );
 
+    // --- LOAD ACTIVE PINs
+    console.log("Loading active PINs");
+    var selPINs = $("#active-pins");
+    selPINs.empty();
+    $.post( "/admin", {cmd: 'getActivePins'}, function(res) {
+        if (res.result === 'ok'){
+            selPINs.empty();
+            if (res.pins.length > 0) {
+                res.pins.forEach(function(pin) {
+                    var tr = $('<tr>');
+                    var td = $('<td class="pinRow">');
+
+                    // --- pin
+                    var c = $('<div class="pinItem" style="width:50%">').text(pin.pin);
+                    td.append(c);
+
+                    // --- created on
+                    var d = '';
+                    if (pin.createdOn)
+                        d = new Date(pin.createdOn).toLocaleDateString();
+                    c = $('<div class="pinItem" style="width:45%">').text(d);
+                    td.append(c);
+
+                    // --- icon delete
+                    c = $('<div class="pinItem" style="width:5%">');
+                    c.append($('<a href="">').append($('<img src="https://sites.google.com/site/recgtasks/images/icon-delete-20px-grey.png" alt="del" class="inline-icon icon-delete" id="pinDel-'+pin._id+'" >')));
+
+                    td.append(c);
+
+                    tr.append(td);
+                    selPINs.append(tr);
+
+                    var onClick="deletePin('"+pin._id+"');";
+                    console.log("onclick="+onClick);
+                    console.log("sel="+"#pinDel-"+pin._id);
+                    //$("#pinDel-"+pin._id).on("click",onClick);
+                });
+            } else {
+                selPINs.text('Žiadne PINy nie sú aktívne');
+            }
+        }
+
+    });
 
     console.log("/admin - Initializing completed");
 }
+
+function deletePin(){
+    console.log("Vymazavanie PINov este nie je hotove");
+}
+
 
 function loadTitles(){
     console.log("Loading hint-titles");
