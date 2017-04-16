@@ -74,8 +74,16 @@ function initAdmin(){
                     var d = '';
                     if (pin.createdOn)
                         d = new Date(pin.createdOn).toLocaleDateString();
-                    c = $('<div class="pinItem" style="width:45%">').text(d);
+                    c = $('<div class="pinItem" style="width:23%">').text(d);
                     td.append(c);
+
+                    // --- expires
+                    var d = '';
+                    if (pin.expired)
+                        d = new Date(pin.expired).toLocaleDateString();
+                    c = $('<div class="pinItem" style="width:22%">').text(d);
+                    td.append(c);
+
 
                     // --- icon delete
                     c = $('<div class="pinItem" style="width:5%">');
@@ -170,4 +178,27 @@ function loadHint(level,id,sender){
             console.log("Loading hint failed");
         });
 
+}
+
+function initLogin() {
+    console.log("/login - Initializing");
+    $("#doLogin").on(
+        "click",
+        function () {
+            var selStatus = $("#loginStatus");
+            if ($("#pin").val().trim() != '') {
+                console.log("Trying to log in");
+                $.post("/login", {pin: $("#pin").val()}, function (res) {
+                    if (res.result != null && res.result == "error") {
+                        selStatus.text('Nesprávny PIN.');
+                        selStatus.css("display", "inline").fadeOut(2000);
+                        console.log("Login failed");
+                    }
+                })
+            } else {
+                selStatus.text('Zadajte PIN.');
+                selStatus.css("display", "inline").fadeOut(2000);
+            }
+        }
+    );
 }

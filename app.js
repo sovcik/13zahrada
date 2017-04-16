@@ -33,6 +33,13 @@ app.use('/admin', rtAdmin);
 app.use('/hints', rtHints);
 app.use('/login', rtLogin);
 
+app.get('/logout', function (req, res, next){
+  console.log("Removing authentication cookie");
+  res.cookie('Auth13zahrada',"0000",{expires:new Date('2000-01-01')});
+  console.log("Redirecting to login");
+  res.redirect('/login');
+});
+
 app.get('/',function(req,res,next){
   res.redirect('/hints');
 });
