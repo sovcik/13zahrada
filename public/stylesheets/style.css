@@ -1,4 +1,4 @@
-body, input {
+body, input, button {
     padding: 10pt;
     font: 14pt "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -30,4 +30,20 @@ option {
 
 .hintL2 {
     background-color: aliceblue;
+}
+table {
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+    padding: 10pt;
+}
+
+td {
+    padding: 10pt;
+}
+
+th {
+    padding: 10pt;
+    background-color: aliceblue;
+    border-bottom-width: thin;
+    border-color: darkgray;
 }
