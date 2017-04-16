@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var dataAPI = require('./lib/dataAPI.js');
 var utils = require('./lib/utils.js');
 
-var rtIndex = require('./routes/route-index');
-var rtLogin = require('./routes/login');
+var rtLogin = require('./routes/route-login');
+//var rtLogin = require('./routes/login');
 var rtAdmin = require('./routes/route-admin');
 var rtHints = require('./routes/route-hints');
 
@@ -31,7 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', rtAdmin);
 //app.use('/login', rtLogin);
 app.use('/hints', rtHints);
-app.use('/', rtIndex);
+app.use('/login', rtLogin);
+
+app.get('/',function(req,res,next){
+  res.redirect('/hints');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

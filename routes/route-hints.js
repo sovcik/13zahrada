@@ -7,7 +7,7 @@ router.get('/',function(req, res, next){
     var cookie = req.cookies.Auth13zahrada;
     if (cookie === undefined) {
         console.log("not authenticated - redirecting to index");
-        res.redirect('/');
+        res.redirect('/login');
     } else {
         console.log("already authenticated");
         next();
@@ -28,6 +28,7 @@ router.post('/', async function(req, res, next) {
     var r = {result:'error',errorMsg:'Unknown command',status:200};
     var pin="113322";
     switch (req.body.cmd){
+
         case 'loadTitles':
             console.log('cmd=loadTitles');
             var titles;
@@ -41,6 +42,7 @@ router.post('/', async function(req, res, next) {
                 res.end();
             });
             break;
+
         case 'loadHint':
             var _level=req.body.level;
             var _id=req.body.id;
@@ -67,11 +69,6 @@ router.post('/', async function(req, res, next) {
             res.end();
             break;
     }
-
-    //console.log("result "+JSON.stringify(r));
-
-
-    //res.end({result:'error',errorMsg:'something happened',status:200});
 
 });
 

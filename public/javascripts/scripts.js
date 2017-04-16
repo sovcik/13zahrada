@@ -86,10 +86,7 @@ function initAdmin(){
                     tr.append(td);
                     selPINs.append(tr);
 
-                    var onClick="deletePin('"+pin._id+"');";
-                    console.log("onclick="+onClick);
-                    console.log("sel="+"#pinDel-"+pin._id);
-                    //$("#pinDel-"+pin._id).on("click",onClick);
+                    $("#pinDel-"+pin._id).on("click",{pinid:pin._id},deletePin);
                 });
             } else {
                 selPINs.text('Žiadne PINy nie sú aktívne');
@@ -101,8 +98,16 @@ function initAdmin(){
     console.log("/admin - Initializing completed");
 }
 
-function deletePin(){
-    console.log("Vymazavanie PINov este nie je hotove");
+function deletePin(event){
+    console.log("Removing PIN from server. id="+event.data.pinid);
+    $.post("/admin", {cmd: 'removePin', pinid: event.data.pinid}, function (res) {
+        if (res.result === 'ok') {
+            console.log("Removed");
+        } else {
+            console.log("Failed to remove");
+        }
+    })
+
 }
 
 

@@ -21,7 +21,7 @@ router.post('/', async function(req, res, next) {
                 res.end('{"result":"error", "status":200}');
             break;
         case 'addPin':
-            console.log('Going to add pin');
+            console.log('Going to add pin='+req.body.pin);
             dataStore.addPIN(req.body.pin, function (err){
                 ret = (err == null);
                 console.log('addPIN result='+ret);
@@ -31,6 +31,18 @@ router.post('/', async function(req, res, next) {
                     res.end('{"result":"error", "status":200}');
             });
             break;
+        case 'removePin':
+            console.log('Going to remove pin id='+req.body.pinid);
+            dataStore.deletePIN(req.body.pinid, function (err, res){
+                ret = (err == null);
+                console.log('removePIN deleted='+res.n+" ok="+res.ok);
+                if (ret)
+                    res.end('{"result":"ok", "status":200}');
+                else
+                    res.end('{"result":"error", "status":200}');
+            });
+            break;
+
         case 'getActivePins':
             console.log('Going to get active PINs');
             dataStore.getActivePINs(function (err, pins){
