@@ -3,13 +3,16 @@ var dataAPI = require('../lib/dataAPI.js');
 var assert = require('assert');
 var router = express.Router();
 
+var cookieValue = "";
+
 router.get('/',function(req, res, next){
     var cookie = req.cookies.Auth13zahrada;
     if (cookie === undefined) {
-        console.log("not authenticated - redirecting to index");
+        console.log("Not authenticated - redirecting to index");
         res.redirect('/login');
     } else {
-        console.log("already authenticated");
+        console.log("Already authenticated");
+        console.log("Cookie value="+cookie);
         next();
     }
 });
@@ -26,7 +29,9 @@ router.post('/', async function(req, res, next) {
     }
 
     var r = {result:'error',errorMsg:'Unknown command',status:200};
-    var pin="113322";
+    var pin=null;
+    var pinId=req.cookies.Auth13zahrada;
+    console.log("PinID="+pinId);
     switch (req.body.cmd){
 
         case 'loadTitles':
@@ -34,7 +39,7 @@ router.post('/', async function(req, res, next) {
             var titles;
             dataAPI.getHintTitles(function (err,titles){
                 if (!err){
-                    dataAPI.log2db(pin,"titlesLoaded","count="+titles.length);
+                    dataAPI.log2db(pin, pinId, "titlesLoaded", "count="+titles.length);
                     console.log('Titles count='+titles.length);
                     r={result:"ok",titles:titles,status:200};
                 }
@@ -48,12 +53,11 @@ router.post('/', async function(req, res, next) {
             var _id=req.body.id;
             console.log('cmd=loadHint body='+JSON.stringify(req.body));
             dataAPI.getHint(_id,_level,function(err,doc){
-                console.log("here");
                 if (!err && doc != null){
                     var hintText = (_level == '1'?doc.l1:doc.l2);
                     r = {result:"ok",hint:hintText,status:200};
                     console.log("Loaded hint="+hintText);
-                    dataAPI.log2db(pin,"hintLoaded-L"+_level,"Hint L"+_level+" loaded for task #"+_id);
+                    dataAPI.log2db(pin, pinId, "hintLoaded-L"+_level,"Hint L"+_level+" loaded for task #"+_id);
                 } else {
                     r = {result:'error', errorMsg:'Error or not found', status:200};
                     console.log("Error="+err);

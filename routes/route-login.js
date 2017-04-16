@@ -7,13 +7,13 @@ var utils = require('../lib/utils.js');
 router.get('/',function(req, res, next){
     var cookie = req.cookies.Auth13zahrada;
     if (cookie === undefined) {
-        console.log("not authenticated - continue");
+        console.log("Aot authenticated - continue");
         next();
     } else {
-        console.log("already authenticated");
-        console.log("redirecting to hints");
+        console.log("Already authenticated");
+        console.log("Cookie value="+cookie);
+        console.log("Redirecting to hints");
         res.redirect('/hints');
-
     }
 });
 
@@ -35,26 +35,25 @@ router.post('/', function(req, res, next) {
             console.log("Pin is available docId="+doc._id);
 
             // create authentication cookie
-            var cookieValue = utils.hashCode(doc._id);
+            var cookieValue = doc._id;
             var cookieExpires;
             if (doc.expired != null)
                 cookieExpires = new Date(doc.expired);
 
             console.log("Cookie value="+cookieValue+" expires="+cookieExpires);
-            res.cookie('Auth13zahrada', cookieValue.toString(), { expires: cookieExpires, httpOnly: true });
+            res.cookie('Auth13zahrada', cookieValue, { expires: cookieExpires, httpOnly: true });
             console.log('Cookie created successfully');
-
-            // record login
-            dataAPI.log2db(pin,'login','success');
 
             // redirect to hints
             console.log("Redirecting from login to hints");
-
             res.redirect('/hints');
+
+            // record login
+            dataAPI.log2db(pin, cookieValue,'login','success');
 
         } else {
             console.log("Pin not found in the list of active PINs");
-            dataAPI.log2db(pin,'login','failed');
+            dataAPI.log2db(pin,null,'login','failed');
             res.json({"result":"error"});
             res.end();
         }
