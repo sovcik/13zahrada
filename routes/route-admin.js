@@ -7,7 +7,7 @@ var router = express.Router();
 var dataStore = require('../lib/dataAPI');
 
 router.post('/', async function(req, res, next) {
-    console.log("/setting - post");
+    console.log("/admin - post");
     console.log(req.body);
     switch (req.body.cmd){
         case 'saveHints':
@@ -21,7 +21,7 @@ router.post('/', async function(req, res, next) {
     }
 
     if (ret)
-        res.end('{"result" : "ok", "status" : 200}');
+        res.end('{"result":"ok", "status":200}');
     else
         res.end('{"result":"error", "status":200}');
 });
@@ -29,19 +29,17 @@ router.post('/', async function(req, res, next) {
 router.get('/',function(req, res, next){
     var cookie = req.cookies.Auth13zahrada;
     if (cookie === undefined) {
-        console.log("/settings - not authenticated - redirecting to index");
+        console.log("/admin - not authenticated - redirecting to index");
         res.redirect('/');
     } else {
-        console.log("/settings - already authenticated");
+        console.log("/admin - already authenticated");
         next();
     }
 });
 
 router.get('/', function(req, res, next) {
-    console.log("/settings - rendering");
-    res.render('settings', { title: '13. záhrada' });
+    console.log("/admin - rendering");
+    res.render('admin', { title: '13. záhrada' });
 });
-
-
 
 module.exports = router;

@@ -2,14 +2,14 @@
  * Created by Jozef on 13.04.2017.
  */
 
-function initSettings(){
-    console.log("Initializing EditHints");
+function initAdmin(){
+    console.log("/admin - Initializing");
     console.log($("#saveHints"));
     $("#saveHints").on(
         "click",
         function () {
             console.log("Posting new hints to server ");
-            $.post("/settings", {cmd:'saveHints', hints:$("#newHintsText").val()}, function (res) {
+            $.post("/admin", {cmd:'saveHints', hints:$("#newHintsText").val()}, function (res) {
                 $("#saveHintsStatus").text('Uložené.');
                 console.log("Saved");
                 })
@@ -24,7 +24,7 @@ function initSettings(){
         "click",
         function () {
             console.log("Posting new PIN to server ");
-            $.post("/settings", {cmd:'addPin', pin:$("#newPin").val()}, function (res) {
+            $.post("/admin", {cmd:'addPin', pin:$("#newPin").val()}, function (res) {
                 $("#addPinStatus").text('Uložené.');
                 console.log("Saved");
                 })
@@ -36,7 +36,7 @@ function initSettings(){
     );
 
 
-    console.log("Initializing EditHints - completed");
+    console.log("/admin - Initializing completed");
 }
 
 function loadTitles(){

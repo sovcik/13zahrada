@@ -9,7 +9,7 @@ var utils = require('./lib/utils.js');
 
 var rtIndex = require('./routes/route-index');
 var rtLogin = require('./routes/login');
-var rtSettings = require('./routes/route-settings');
+var rtAdmin = require('./routes/route-admin');
 var rtHints = require('./routes/route-hints');
 
 var app = express();
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use(express.cookieParser());
 
-app.use('/settings', rtSettings);
+app.use('/admin', rtAdmin);
 //app.use('/login', rtLogin);
 app.use('/hints', rtHints);
 app.use('/', rtIndex);
