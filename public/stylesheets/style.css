@@ -47,3 +47,7 @@ th {
     border-bottom-width: thin;
     border-color: darkgray;
 }
+
+.statusMsg {
+    margin-left: 10pt;
+}

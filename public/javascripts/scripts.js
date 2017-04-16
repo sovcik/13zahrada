@@ -8,30 +8,46 @@ function initAdmin(){
     $("#saveHints").on(
         "click",
         function () {
-            console.log("Posting new hints to server ");
-            $.post("/admin", {cmd:'saveHints', hints:$("#newHintsText").val()}, function (res) {
-                $("#saveHintsStatus").text('Uložené.');
-                console.log("Saved");
+            var selHintsText = $("#newHintsText");
+            var selStatus = $("#saveHintsStatus");
+            if (selHintsText.val().trim() != '') {
+                console.log("Posting new hints to server ");
+                $.post("/admin", {cmd: 'saveHints', hints: selHintsText.val()}, function (res) {
+                    selStatus.text('Uložené.');
+                    selStatus.css("display", "inline").fadeOut(2000);
+                    console.log("Saved");
                 })
-                .fail(function () {
-                    $("#saveHintsStatus").text('Nepodarilo sa uložiť.');
-                    console.log("Save failed");
-                });
+                    .fail(function () {
+                        selStatus.text('Nepodarilo sa uložiť.');
+                        console.log("Save failed");
+                    });
+            } else {
+                selStatus.text('Nie je čo uložiť.');
+                selStatus.css("display", "inline").fadeOut(2000);
+            }
         }
     );
 
     $("#saveNewPin").on(
         "click",
         function () {
-            console.log("Posting new PIN to server ");
-            $.post("/admin", {cmd:'addPin', pin:$("#newPin").val()}, function (res) {
-                $("#addPinStatus").text('Uložené.');
-                console.log("Saved");
+            var selStatus = $("#addPinStatus");
+            var selText = $("#newPin");
+            if (selText.val().trim() != '') {
+                console.log("Posting new PIN to server ");
+                $.post("/admin", {cmd: 'addPin', pin: selText.val()}, function (res) {
+                    selStatus.text('Uložené.');
+                    selStatus.css("display", "inline").fadeOut(2000);
+                    console.log("Saved");
                 })
-                .fail(function () {
-                    $("#addPinStatus").text('Nepodarilo sa uložiť.');
-                    console.log("Save failed");
-                });
+                    .fail(function () {
+                        selStatus.text('Nepodarilo sa uložiť.');
+                        console.log("Save failed");
+                    });
+            } else {
+                selStatus.text('Nie je čo uložiť.');
+                selStatus.css("display", "inline").fadeOut(2000);
+            }
         }
     );
 

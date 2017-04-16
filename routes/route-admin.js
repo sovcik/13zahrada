@@ -9,21 +9,29 @@ var dataStore = require('../lib/dataAPI');
 router.post('/', async function(req, res, next) {
     console.log("/admin - post");
     console.log(req.body);
+    var ret = true;
     switch (req.body.cmd){
         case 'saveHints':
             console.log('Going to save hints');
             ret = await dataStore.saveHints(req.body.hints);
+            if (ret)
+                res.end('{"result":"ok", "status":200}');
+            else
+                res.end('{"result":"error", "status":200}');
             break;
-        case 'addPIN':
+        case 'addPin':
             console.log('Going to add pin');
-            ret = await dataStore.addPIN(req.body.PIN);
+            dataStore.addPIN(req.body.pin, function (err){
+                ret = (err == null);
+                console.log('addPIN result='+ret);
+                if (ret)
+                    res.end('{"result":"ok", "status":200}');
+                else
+                    res.end('{"result":"error", "status":200}');
+            });
             break;
     }
 
-    if (ret)
-        res.end('{"result":"ok", "status":200}');
-    else
-        res.end('{"result":"error", "status":200}');
 });
 
 router.get('/',function(req, res, next){

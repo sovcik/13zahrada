@@ -14,11 +14,9 @@ block content
         label(for='newPin') PIN:
         input#newPin(type='text', placeholder='12345' name='newPin' maxlength=10)
         button(id="saveNewPin") Pridať
-        p(id="addPinStatus") placeholder
     div(id="hint-page")
         p Tu môžete modifikovať nápovedy pre 13. záhradu
         textarea(id="newHintsText" rows="20" cols="80" placeholder="Nové nápovedy vložte sem a kliknite Uložiť.")
         button(id="saveHints") Uložiť
-        p(id="saveHintsStatus") placeholder
         script.
             initAdmin();
