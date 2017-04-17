@@ -1,13 +1,17 @@
 extends layout
 
 block content
-    h1= title
-    p Vitajte v nápovedách pre 13. záhradu
-    div(id='login-page')
-        label(for='pin') PIN:
-        input(id="pin" type='text', placeholder='12345' name='PIN')
-        button(id="doLogin") Otvoriť nápovedu
-        span(id="loginStatus" class="statusMsg")
-        p Pokiaľ nemáte PIN, tak kontaktujte správcov 13. záhrady.
+    div(class="container")
+        div(class="row")
+            div(class="col-sm-12")
+                h1= title
+                p Vitajte v nápovedách pre 13. záhradu
+        div(class="row")
+            div(class="col-sm-12")
+                label(for='pin') PIN:
+                input(id="pin" type='text', placeholder='12345' name='PIN' class="input-lg")
+                button(id="doLogin" class="btn-primary btn-lg") Otvoriť nápovedu
+                span(id="loginStatus" class="text-warning")
+                p Pokiaľ nemáte PIN, tak kontaktujte správcov 13. záhrady.
     script.
         initLogin();

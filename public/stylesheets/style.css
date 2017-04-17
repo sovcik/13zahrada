@@ -1,6 +1,20 @@
+@media print and (min-resolution: 200dpi) {
+    :root {
+        --scal: 5;
+    }
+}
+
+@media print and (min-resolution: 450dpi) {
+    :root {
+        --scal: 10;
+    }
+}
+
+
+
 body, input, button {
     padding: 10pt;
-    font: 14pt "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: calc(14pt "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
