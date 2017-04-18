@@ -59,10 +59,10 @@ router.post('/', async function(req, res, next) {
 });
 
 router.get('/',function(req, res, next){
-    var cookie = req.cookies.Auth13zahrada;
+    var cookie = req.cookies.Auth13zahradaAdmin;
     if (cookie === undefined) {
-        console.log("/admin - not authenticated - redirecting to index");
-        res.redirect('/');
+        console.log("/admin - not authenticated - redirecting to admin login");
+        res.redirect('/adminlogin');
     } else {
         console.log("/admin - already authenticated");
         next();
@@ -71,7 +71,7 @@ router.get('/',function(req, res, next){
 
 router.get('/', function(req, res, next) {
     console.log("/admin - rendering");
-    res.render('admin', { title: '13. záhrada' });
+    res.render('admin', { title: '13. záhrada - Admin' });
 });
 
 module.exports = router;

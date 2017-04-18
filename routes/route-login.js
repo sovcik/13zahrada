@@ -19,7 +19,7 @@ router.get('/',function(req, res, next){
 
 router.get('/', function(req, res, next) {
     console.log("Rendering login");
-    res.render('login', { title: '13. záhrada' });
+    res.render('login', { title: '13. záhrada - Prihlásenie' });
 });
 
 router.post('/', function(req, res, next) {

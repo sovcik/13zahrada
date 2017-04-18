@@ -19,7 +19,7 @@ router.get('/',function(req, res, next){
 
 router.get('/', function(req, res, next) {
     console.log("rendering hints");
-    res.render('hints', { title: '13. záhrada' });
+    res.render('hints', { title: '13. záhrada - Nápovedy' });
 });
 
 router.post('/', async function(req, res, next) {
