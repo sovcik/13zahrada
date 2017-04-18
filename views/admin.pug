@@ -1,26 +1,30 @@
 extends layout
 
 block content
-    h1= title
-    hr
-    div(id="pin-page" class="page")
-        p Toto je zoznam aktuálne aktívnych PINov.
-        table(id="active-pins")
-            tr
-                th PIN
-                th Platnosť do
-            tr
-                td 111222
-                td 1122334
-        label(for='newPin') PIN:
-        input#newPin(type='text', placeholder='12345' name='newPin' maxlength=10)
-        button(id="saveNewPin") Pridať aktívny PIN
-        span(id="addPinStatus" class="statusMsg")
-    hr
-    div(id="hint-page" class="page")
-        p Tu môžete modifikovať nápovedy pre 13. záhradu
-        textarea(id="newHintsText" rows="20" cols="80" placeholder="Nové nápovedy vložte sem a kliknite Uložiť.")
-        button(id="saveHints") Uložiť nové nápovedy
-        span(id="saveHintsStatus" class="statusMsg")
+    div(class="container page")
+        div(class="row col-sm-12")
+            h1= title
+        hr
+        div(id="pin-page" class="row col-sm-12")
+            p Toto je zoznam aktuálne aktívnych PINov.
+            div(id="active-pins")
+            div(class="row")
+                div(class="col-sm-4")
+                    input(class="input-lg" id="newPin" type='text', placeholder='nový PIN' name='newPin' maxlength=10)
+                div(class="col-sm-4")
+                    button(id="saveNewPin" class="btn-lg btn-primary") Pridať nový aktívny PIN
+                div(class="col-sm-4")
+                    span(id="addPinStatus" class="statusMsg text-warning")
+        hr
+        div(id="hint-page" class="row col-sm-12")
+            div(class="row")
+                div(class="col-sm-12")
+                    p Tu môžete modifikovať nápovedy pre 13. záhradu
+                    textarea(id="newHintsText" rows="20" cols="70" placeholder="Nové nápovedy vložte sem a kliknite Uložiť.")
+            div(class="row")
+                div(class="col-sm-2")
+                    button(id="saveHints" class="btn-lg btn-primary") Uložiť nové nápovedy
+                div(class="col-sm-10")
+                    span(id="saveHintsStatus" class="statusMsg")
     script.
         initAdmin();
