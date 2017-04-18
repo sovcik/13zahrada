@@ -157,7 +157,7 @@ function loadHint(level,id,sender){
             if (res.result == null || res.result == "error")
                 console.log("No hint found");
             else {
-                if (res.hint.trim() == ""){
+                if (res.hint.trim() == "."){
                     console.log("Empty hint found - ignoring");
                     return;
                 }
