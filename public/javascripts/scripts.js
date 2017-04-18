@@ -135,9 +135,9 @@ function loadTitles(){
                 //$("#hints-page").empty();
                 for (var i=0;i<res.titles.length;i++){
                     var id=res.titles[i]._id;
-                    var onClick="loadHint('1','"+id+"','L0"+id+"');";
+                    var onClick="loadHint('1','"+id+"','L"+id+"0');";
                     console.log(onClick);
-                    $("#hints-page").append('<div id="L0'+id+'" class="hint hintL0 row col-sm-12" onclick="'+onClick+'">'+res.titles[i].title+'</div>');
+                    $("#hints-page").append('<div id="L'+id+'0" class="hint hintL0 row col-sm-12" onclick="'+onClick+'"> <h3>'+res.titles[i].title+'</h3></div>');
                 }
             }
             console.log("Loaded");
@@ -175,7 +175,7 @@ function loadHint(level,id,sender){
                     text=text.replace(urlExp,'<img src="'+url[0]+'" class="img-responsive" alt="Image hint '+id+level+'">');
                 }
 
-                var elm = '<div id="L' + id + level + '" class="row col-sm-12 hint hintL' + level + '" onclick="' + onClick + '">' + text + '</div>';
+                var elm = '<div id="L' + id + level + '" class="row col-sm-12 hint hintL' + level + '" onclick="' + onClick + '"><h5>' + text + '</h5></div>';
 
                 console.log(elm);
                 //$("#L"+(level-1)+id).append('<div id=L'+level+id+' class="hint hintL'+level+'" onclick="'+onClick+'">'+text+'</div>');
