@@ -35,18 +35,16 @@ function initAdmin(){
             if (selText.val().trim() != '') {
                 console.log("Posting new PIN to server ");
                 $.post("/admin", {cmd: 'addPin', pin: selText.val()}, function (res) {
-                    if (res.result === 'ok') {
+                    if (res.result == 'ok') {
                         selStatus.text('Uložené.');
                         selStatus.css("display", "inline").fadeOut(2000);
                         console.log("Saved");
+                        selText.val('');
+                        loadPINs();
                     } else {
                         selStatus.text('Chyba. Skontrolujte, či rovnaký PIN ešte nie je aktívny');
                     }
                 })
-                    .fail(function () {
-                        selStatus.text('Nepodarilo sa uložiť.');
-                        console.log("Save failed");
-                    });
             } else {
                 selStatus.text('Nie je čo uložiť.');
                 selStatus.css("display", "inline").fadeOut(2000);
@@ -54,6 +52,12 @@ function initAdmin(){
         }
     );
 
+    loadPINs();
+
+    console.log("/admin - Initializing completed");
+}
+
+function loadPINs(){
     // --- LOAD ACTIVE PINs
     console.log("Loading active PINs");
     var selPINs = $("#active-pins");
@@ -63,35 +67,35 @@ function initAdmin(){
             selPINs.empty();
             if (res.pins.length > 0) {
                 res.pins.forEach(function(pin) {
-                    var tr = $('<tr>');
-                    var td = $('<td class="pinRow">');
+                    var tr = $('<div class="row pinRow">');
+                    //var td = $('<td class="pinRow">');
 
                     // --- pin
-                    var c = $('<div class="pinItem" style="width:50%">').text(pin.pin);
-                    td.append(c);
+                    var c = $('<div class="pinItem col-sm-3" >').text(pin.pin);
+                    tr.append(c);
 
                     // --- created on
-                    var d = '';
+                    var d = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                     if (pin.createdOn)
                         d = new Date(pin.createdOn).toLocaleDateString();
-                    c = $('<div class="pinItem" style="width:23%">').text(d);
-                    td.append(c);
+                    c = $('<div class="pinItem col-sm-4" >').html(d);
+                    tr.append(c);
 
                     // --- expires
-                    var d = '';
+                    var d = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                     if (pin.expired)
                         d = new Date(pin.expired).toLocaleDateString();
-                    c = $('<div class="pinItem" style="width:22%">').text(d);
-                    td.append(c);
+                    c = $('<div class="pinItem col-sm-4" >').html(d);
+                    tr.append(c);
 
 
                     // --- icon delete
-                    c = $('<div class="pinItem" style="width:5%">');
+                    c = $('<div class="pinItem col-sm-1" >');
                     c.append($('<a href="">').append($('<img src="https://sites.google.com/site/recgtasks/images/icon-delete-20px-grey.png" alt="del" class="inline-icon icon-delete" id="pinDel-'+pin._id+'" >')));
 
-                    td.append(c);
+                    tr.append(c);
 
-                    tr.append(td);
+                    //tr.append(td);
                     selPINs.append(tr);
 
                     $("#pinDel-"+pin._id).on("click",{pinid:pin._id},deletePin);
@@ -103,7 +107,6 @@ function initAdmin(){
 
     });
 
-    console.log("/admin - Initializing completed");
 }
 
 function deletePin(event){
@@ -134,7 +137,7 @@ function loadTitles(){
                     var id=res.titles[i]._id;
                     var onClick="loadHint('1','"+id+"','L0"+id+"');";
                     console.log(onClick);
-                    $("#hints-page").append('<div id="L0'+id+'" class="hint hintL0" onclick="'+onClick+'">'+res.titles[i].title+'</div>');
+                    $("#hints-page").append('<div id="L0'+id+'" class="hint hintL0 row col-sm-12" onclick="'+onClick+'">'+res.titles[i].title+'</div>');
                 }
             }
             console.log("Loaded");
@@ -162,14 +165,24 @@ function loadHint(level,id,sender){
                 var levNo = parseInt(level);
                 var onClick = '';
                 if (levNo < 2) {
-                    onClick = "loadHint('" + (levNo + 1) + "','" + id + "','L" + level + id + "');";
+                    onClick = "loadHint('" + (levNo + 1) + "','" + id + "','L" +id + level + "');";
                 }
-                var elm = '<div id="L' + level + id + '" class="hint hintL' + level + '" onclick="' + onClick + '">' + text + '</div>';
+
+                var urlExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+                var url=urlExp.exec(text);
+                if (url) {
+                    console.log("Hint contains URL - assuming image");
+                    text=text.replace(urlExp,'<img src="'+url[0]+'" class="img-responsive" alt="Image hint '+id+level+'">');
+                }
+
+                var elm = '<div id="L' + id + level + '" class="row col-sm-12 hint hintL' + level + '" onclick="' + onClick + '">' + text + '</div>';
+
                 console.log(elm);
                 //$("#L"+(level-1)+id).append('<div id=L'+level+id+' class="hint hintL'+level+'" onclick="'+onClick+'">'+text+'</div>');
 
-                // show next hint
                 $("#" + sender).append(elm);
+                // show next hint
+                //$("#" + sender).append(elm);
                 // disable click for already clicked hints
                 $("#" + sender).prop('onclick', '');
             }

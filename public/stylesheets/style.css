@@ -1,17 +1,5 @@
-@media print and (min-resolution: 200dpi) {
-    :root {
-        --scal: 5;
-    }
-}
 
-@media print and (min-resolution: 450dpi) {
-    :root {
-        --scal: 10;
-    }
-}
-
-
-
+/*
 body, input, button {
     padding: 10pt;
     font: calc(14pt "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -26,24 +14,24 @@ option {
     padding-bottom: 10pt;
 }
 
+*/
 .hint {
     padding-top: 10pt;
-    padding-bottom: 10pt;
 }
 
 .hintL0 {
     margin:3pt;
-    background-color: beige;
+    background-color: lightsteelblue;
     padding-left: 10pt;
     padding-right: 10pt;
 }
 
 .hintL1 {
-    background-color: cornsilk;
+    background-color: lightblue;
 }
 
 .hintL2 {
-    background-color: aliceblue;
+    background-color: lightcyan;
 }
 table {
     min-width: inherit;
@@ -84,7 +72,7 @@ th {
 }
 
 .page {
-    min-width: 500px;
+    max-width: 800px;
     margin-top: 20pt;
     margin-bottom: 20pt;
     border-top-width: thick;

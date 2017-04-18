@@ -4,7 +4,7 @@
 
 var express = require('express');
 var router = express.Router();
-var dataStore = require('../lib/dataAPI');
+var dataAPI = require('../lib/dataAPI');
 
 router.post('/', async function(req, res, next) {
     console.log("/admin - post");
@@ -14,38 +14,38 @@ router.post('/', async function(req, res, next) {
     switch (req.body.cmd){
         case 'saveHints':
             console.log('Going to save hints');
-            ret = await dataStore.saveHints(req.body.hints);
+            ret = await dataAPI.saveHints(req.body.hints);
             if (ret)
-                res.end('{"result":"ok", "status":200}');
-            else
-                res.end('{"result":"error", "status":200}');
+                r = {"result":"ok", "status":200};
+            res.json(r);
+            res.end();
             break;
         case 'addPin':
             console.log('Going to add pin='+req.body.pin);
-            dataStore.addPIN(req.body.pin, function (err){
+            dataAPI.addPIN(req.body.pin, function (err){
                 ret = (err == null);
                 console.log('addPIN result='+ret);
                 if (ret)
-                    res.end('{"result":"ok", "status":200}');
-                else
-                    res.end('{"result":"error", "status":200}');
+                    r = {"result":"ok", "status":200};
+                res.json(r);
+                res.end();
             });
             break;
         case 'removePin':
             console.log('Going to remove pin id='+req.body.pinid);
-            dataStore.deletePIN(req.body.pinid, function (err, res){
+            dataAPI.deletePIN(req.body.pinid, function (err, res){
                 ret = (err == null);
                 console.log('removePIN deleted='+res.n+" ok="+res.ok);
                 if (ret)
-                    res.end('{"result":"ok", "status":200}');
-                else
-                    res.end('{"result":"error", "status":200}');
+                    r = {"result":"ok", "status":200};
+                res.json(r);
+                res.end();
             });
             break;
 
         case 'getActivePins':
             console.log('Going to get active PINs');
-            dataStore.getActivePINs(function (err, pins){
+            dataAPI.getActivePINs(function (err, pins){
                 ret = (err == null);
                 console.log('getActivePINs result='+pins.length);
                 if (ret)
@@ -53,8 +53,7 @@ router.post('/', async function(req, res, next) {
                 res.json(r);
                 res.end();
             });
-
-            break;
+             break;
     }
 
 });
