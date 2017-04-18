@@ -3,7 +3,7 @@ extends layout
 block content
     div(class="container")
         h1= title
-        p Prihlásenie administrátora 1
+        p Prihlásenie administrátora
         form(method='POST' action='/adminlogin')
              label(for='password') Heslo:
              input(id='password', type='text', placeholder='12345', name='password')

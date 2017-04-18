@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var env = require('dotenv').config();
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -12,7 +13,6 @@ var rtLogin = require('./routes/route-login');
 var rtAdmin = require('./routes/route-admin');
 var rtAdminLogin = require('./routes/route-adminlogin');
 var rtHints = require('./routes/route-hints');
-
 
 var app = express();
 

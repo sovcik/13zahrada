@@ -206,6 +206,11 @@ function initLogin() {
                         selStatus.text('Nesprávny PIN.');
                         selStatus.css("display", "inline").fadeOut(2000);
                         console.log("Login failed");
+                    } else {
+                        if (res.result == "ok") {
+                            console.log("Login OK, opening hints");
+                            window.location.href = '/hints';
+                        }
                     }
                 })
             } else {

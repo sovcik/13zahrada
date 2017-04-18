@@ -48,9 +48,8 @@ router.post('/', function(req, res, next) {
             console.log('Cookie created successfully');
 
             // redirect to hints
-            console.log("Redirecting from login to hints");
-            res.redirect('/hints');
-
+            console.log("Login successful");
+            res.json({"result":"ok"});
 
         } else {
             console.log("Pin not found in the list of active PINs");
