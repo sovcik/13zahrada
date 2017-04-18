@@ -5,8 +5,9 @@ block content
         div(class="row col-sm-12")
             h1= title
         hr
-        div(id="report-page" class="row col-sm-12")
-            p Zadajte PIN a d8tum jeho použitia.
+        div(id="report-page")
+            div(class="row col-sm-12")
+                p Zadajte PIN a dátum jeho použitia.
             div(class="row")
                 div(class="col-sm-4")
                     label(for="reportDate") Dátum
@@ -20,7 +21,7 @@ block content
                 div(class="col-sm-12")
                     div(id="pinReport")
                         p Tu sa zobrazí report...
-
+        hr
         div(id="pin-page" class="row col-sm-12")
             p Toto je zoznam aktuálne aktívnych PINov.
             div(id="active-pins")

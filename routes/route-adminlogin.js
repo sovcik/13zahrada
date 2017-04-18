@@ -42,8 +42,9 @@ router.post('/', function(req, res, next) {
                 pwdOK = pwdhash.verify(enteredPwd,ap);
 
             if (!pwdOK) {
-                res.render('../views/error', {message: 'Nesprávne heslo', error:{status:''}});
                 dataAPI.log2db(null,null,'admin-login','failed');
+                res.render('../views/error', {message: 'Nesprávne heslo', error:{status:''}});
+                next();
                 return;
             }
 

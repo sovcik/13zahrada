@@ -5,6 +5,7 @@
 var express = require('express');
 var router = express.Router();
 var dataAPI = require('../lib/dataAPI');
+var pug = require('pug');
 
 router.post('/', async function(req, res, next) {
     console.log("/admin - post");
@@ -15,12 +16,18 @@ router.post('/', async function(req, res, next) {
         case 'createReport':
             console.log('Going to create report');
             dataAPI.getHintUsage(req.body.pin, req.body.pinDate, function(err,usages){
-                ret = (err == null);
-                console.log('createReport result='+ret);
+                ret = (err == null && usages.length > 0);
+                console.log('createReport usages='+usages.length);
                 if (ret){
-                    r = {result:"ok", status:200, report:{pin:req.body.pin, pinDate:req.body.pinDate, reportDate:new Date(), usages:usages}}
+                    var rptData=usages[0];
+                    var rpt=pug.compileFile('views/report.pug');
+                    //rptData.date = rptData.date.toLocaleDateString();
+                    rptData.usedHints.sort();
+                    console.log(rpt(rptData));
+                    r = {result:"ok", status:200, report:rpt(rptData)};
                 }
                 res.json(r);
+                res.end();
             });
 
             break;

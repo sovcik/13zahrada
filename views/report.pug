@@ -1,0 +1,14 @@
+table
+    tr
+        td
+            b PIN
+        td #{pin}
+    tr
+        td
+            b Dátum
+        td #{date}
+p
+    b Použité nápovedy
+    ul
+        each u in usedHints
+            li= u

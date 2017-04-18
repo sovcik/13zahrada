@@ -12,13 +12,19 @@ function initAdmin(){
             if (rptDate.val().trim() != '' && rptPIN.val().trim() != '') {
                 console.log("Requesting PIN report");
                 $.post("/admin", {cmd: 'createReport', pin:rptPIN.val(), pinDate:rptDate.val()}, function (res) {
+                    console.log(JSON.stringify(res));
                     if (res.result == "ok"){
                         console.log("Report received");
                         $("#pinReport").empty();
-                        var rpt = JSON.stringify(res.report);
-                        $("#pinReport").html(rpt);
+                        //var rpt = JSON.stringify(res.report);
+                        //console.log(rpt);
+                        $("#pinReport").html(res.report);
                     }
                 })
+                .fail(function () {
+                    console.log("Report failed");
+                });
+
             }
         }
     );
@@ -34,10 +40,10 @@ function initAdmin(){
                     selStatus.css("display", "inline").fadeOut(2000);
                     console.log("Saved");
                 })
-                    .fail(function () {
-                        selStatus.text('Nepodarilo sa uložiť.');
-                        console.log("Save failed");
-                    });
+                .fail(function () {
+                    selStatus.text('Nepodarilo sa uložiť.');
+                    console.log("Save failed");
+                });
             } else {
                 selStatus.text('Nie je čo uložiť.');
                 selStatus.css("display", "inline").fadeOut(2000);
