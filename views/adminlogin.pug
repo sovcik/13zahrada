@@ -2,8 +2,9 @@ extends layout
 
 block content
     div(class="container")
+        div(class="row col-sm-12")
         h1= title
-        p Prihlásenie administrátora
+        p Prihlásenie správcu záhrady
         form(method='POST' action='/adminlogin')
              label(for='password') Heslo:
-             input(id='password', type='text', placeholder='12345', name='password')
+             input(class="input-lg" id='password', type='password', placeholder='12345', name='password')

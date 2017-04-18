@@ -40,12 +40,14 @@ router.post('/', function(req, res, next) {
                 cookieExpires = new Date(doc.expired);
 
             console.log("Cookie value="+cookieValue+" expires="+cookieExpires);
-
-            // record login
-            //dataAPI.log2db(pin, cookieValue,'login','success');
-
             res.cookie('Auth13zahrada', cookieValue, { expires: cookieExpires, httpOnly: true });
             console.log('Cookie created successfully');
+
+            // record login
+            dataAPI.log2db(pin, cookieValue,'login-ok','success');
+
+            // record login to reports
+            dataAPI.logHintLogin(new Date(),pin,cookieValue);
 
             // redirect to hints
             console.log("Login successful");
@@ -53,7 +55,7 @@ router.post('/', function(req, res, next) {
 
         } else {
             console.log("Pin not found in the list of active PINs");
-            dataAPI.log2db(pin,null,'login','failed');
+            dataAPI.log2db(pin,null,'login-fail','failed');
             res.json({"result":"error"});
 
         }

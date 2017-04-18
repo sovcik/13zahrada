@@ -4,6 +4,24 @@
 
 function initAdmin(){
     console.log("/admin - Initializing");
+    $("#createReport").on(
+        "click",
+        function () {
+            var rptDate = $("#reportDate");
+            var rptPIN = $("#reportPin");
+            if (rptDate.val().trim() != '' && rptPIN.val().trim() != '') {
+                console.log("Requesting PIN report");
+                $.post("/admin", {cmd: 'createReport', pin:rptPIN.val(), pinDate:rptDate.val()}, function (res) {
+                    if (res.result == "ok"){
+                        console.log("Report received");
+                        $("#pinReport").empty();
+                        var rpt = JSON.stringify(res.report);
+                        $("#pinReport").html(rpt);
+                    }
+                })
+            }
+        }
+    );
     $("#saveHints").on(
         "click",
         function () {
@@ -77,14 +95,14 @@ function loadPINs(){
                     // --- created on
                     var d = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                     if (pin.createdOn)
-                        d = new Date(pin.createdOn).toLocaleDateString();
+                        d = "C="+new Date(pin.createdOn).toLocaleDateString()+" "+new Date(pin.createdOn).toLocaleTimeString();
                     c = $('<div class="pinItem col-sm-4" >').html(d);
                     tr.append(c);
 
                     // --- expires
-                    var d = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                    d = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                     if (pin.expired)
-                        d = new Date(pin.expired).toLocaleDateString();
+                        d = "X="+new Date(pin.expired).toLocaleDateString()+" "+new Date(pin.expired).toLocaleTimeString();
                     c = $('<div class="pinItem col-sm-4" >').html(d);
                     tr.append(c);
 

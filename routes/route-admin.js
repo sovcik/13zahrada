@@ -12,25 +12,40 @@ router.post('/', async function(req, res, next) {
     var ret = true;
     var r = {"result":"error", "status":200};
     switch (req.body.cmd){
+        case 'createReport':
+            console.log('Going to create report');
+            dataAPI.getHintUsage(req.body.pin, req.body.pinDate, function(err,usages){
+                ret = (err == null);
+                console.log('createReport result='+ret);
+                if (ret){
+                    r = {result:"ok", status:200, report:{pin:req.body.pin, pinDate:req.body.pinDate, reportDate:new Date(), usages:usages}}
+                }
+                res.json(r);
+            });
+
+            break;
+
         case 'saveHints':
             console.log('Going to save hints');
             ret = await dataAPI.saveHints(req.body.hints);
             if (ret)
-                r = {"result":"ok", "status":200};
+                r = {result:"ok", status:200};
             res.json(r);
             res.end();
             break;
+
         case 'addPin':
             console.log('Going to add pin='+req.body.pin);
             dataAPI.addPIN(req.body.pin, function (err){
                 ret = (err == null);
                 console.log('addPIN result='+ret);
                 if (ret)
-                    r = {"result":"ok", "status":200};
+                    r = {result:"ok", status:200};
                 res.json(r);
                 res.end();
             });
             break;
+
         case 'removePin':
             console.log('Going to remove pin id='+req.body.pinid);
             dataAPI.deletePIN(req.body.pinid, function (err, res){

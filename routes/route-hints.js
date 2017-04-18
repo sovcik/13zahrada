@@ -58,6 +58,7 @@ router.post('/', async function(req, res, next) {
                     r = {result:"ok",hint:hintText,status:200};
                     console.log("Loaded hint="+hintText);
                     dataAPI.log2db(pin, pinId, "hintLoaded-L"+_level,"Hint L"+_level+" loaded for task #"+_id);
+                    dataAPI.logHintUsage(pinId, _id, _level);
                 } else {
                     r = {result:'error', errorMsg:'Error or not found', status:200};
                     console.log("Error="+err);
