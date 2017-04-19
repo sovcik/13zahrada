@@ -15,7 +15,7 @@ function initAdmin(){
                     $("#pinReport").empty();
                     if (res.result == "ok"){
                         console.log("Report received");
-                        $("#pinReport").html(res.report);
+                        $("#pinReport").html(res.reportHTML);
                     } else {
                         console.log("Error while creating report");
                         $("#pinReport").text("Nie sú k dispozícii žiadne údaje pre zadaný dátum a PIN.");
