@@ -37,9 +37,14 @@ function initAdmin(){
             if (selHintsText.val().trim() != '') {
                 console.log("Posting new hints to server ");
                 $.post("/admin", {cmd: 'saveHints', hints: selHintsText.val()}, function (res) {
-                    selStatus.text('Uložené.');
-                    selStatus.css("display", "inline").fadeOut(2000);
-                    console.log("Saved");
+                    if (res.result == "ok") {
+                        selStatus.text('Uložené.');
+                        selStatus.css("display", "inline").fadeOut(2000);
+                        console.log("Saved");
+                    } else {
+                        console.log("Error while saving hints");
+                        selStatus.text('Nepodarilo sa nahrať.');
+                    }
                 })
                 .fail(function () {
                     selStatus.text('Nepodarilo sa uložiť.');
@@ -49,6 +54,30 @@ function initAdmin(){
                 selStatus.text('Nie je čo uložiť.');
                 selStatus.css("display", "inline").fadeOut(2000);
             }
+        }
+    );
+
+    $("#loadHints").on(
+        "click",
+        function () {
+            var selHintsText = $("#newHintsText");
+            var selStatus = $("#loadHintsStatus");
+
+            console.log("Load new hints to server ");
+            $.post("/admin", {cmd: 'loadHints'}, function (res) {
+                if (res.result == "ok") {
+                    selHintsText.val(res.hints);
+                    selStatus.text('Nahrané.');
+                    selStatus.css("display", "inline").fadeOut(2000);
+                    console.log("Loaded");
+                } else {
+                    console.log("Error while loading hints.");
+                }
+            })
+            .fail(function () {
+                selStatus.text('Nepodarilo sa uložiť.');
+                console.log("Save failed");
+            });
         }
     );
 

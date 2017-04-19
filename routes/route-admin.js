@@ -31,6 +31,16 @@ router.post('/', async function(req, res, next) {
             res.end();
             break;
 
+        case 'loadHints':
+            console.log('Going to loadsave hints');
+            utils.loadAllHints(function(h){
+                console.log("HINTS="+h);
+                r = {result:"ok", status:200, hints:h};
+                res.json(r);
+                res.end();
+            });
+            break;
+
         case 'addPin':
             console.log('Going to add pin='+req.body.pin);
             dataAPI.addPIN(req.body.pin, function (err){
