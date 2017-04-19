@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 var dataAPI = require('./lib/dataAPI.js');
 var utils = require('./lib/utils.js');
 
-var CronJob = require('cron').CronJob;
+
+
 
 var rtLogin = require('./routes/route-login');
 //var rtLogin = require('./routes/login');
@@ -66,37 +67,5 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-
-// get cron job recurrence pattern from environment variable
-var cronPatSendReport = process.env.CRON_SEND_RPT;
-// if not set, set default
-if (!cronPatSendReport || cronPatSendReport.trim() == "") cronPatSendReport = '20 * * * * *';
-
-console.log("Configuring CRON job SendReport pattern="+cronPatSendReport);
-var jobSendReport = new CronJob(cronPatSendReport, function() {
-    console.log("Starting jobSendReport pattern="+cronPatSendReport);
-    // get reports which has not been emailed yet
-    dataAPI.getReportsWaitingForEmail(function(err,list){
-        if (err) {
-            console.log("Error occurred while getting not sent reports. "+JSON.stringify(err));
-            return;
-        }
-        for (var i=0; i<list.length; i++) {
-            console.log("Sending report "+(i+1)+"/"+list.length);
-            utils.createReport(list[i].pin, list[i].date, {$set:{sent: 1}}, function (err, r) {
-                if (err) {
-                    console.log("Error occurred while generating report. " + JSON.stringify(err));
-                }
-                console.log("Data="+JSON.stringify(r.reportData));
-
-            });
-        }
-
-    });
-
-    }, null,
-    true, // start now
-    process.env.TZ // timezone
-);
 
 module.exports = app;
