@@ -53,12 +53,17 @@ router.post('/', async function(req, res, next) {
             var _id=req.body.id;
             console.log('cmd=loadHint body='+JSON.stringify(req.body));
             dataAPI.getHint(_id,_level,function(err,doc){
-                if (!err && doc != null){
-                    var hintText = (_level == '1'?doc.l1:doc.l2);
-                    r = {result:"ok",hint:hintText,status:200};
-                    console.log("Loaded hint="+hintText);
-                    dataAPI.log2db(pin, pinId, "hintLoaded-L"+_level,"Hint L"+_level+" loaded for task #"+_id);
-                    dataAPI.logHintUsage(pinId, _id, _level);
+                if (!err && doc != null) {
+                    var hintText = (_level == '1' ? doc.l1 : doc.l2);
+                    r = {result: "ok", hint: hintText, status: 200};
+                    if (hintText.trim() == "" || hintText.substr(0, 1) == ".") {
+                        console.log("Empty hint for T" + _id + "-L" + _level + " => ignoring");
+                        r.result = "error";
+                    } else {
+                        console.log("Loaded hint=" + hintText);
+                        dataAPI.log2db(pin, pinId, "hintLoaded-L" + _level, "Hint L" + _level + " loaded for task #" + _id);
+                        dataAPI.logHintUsage(pinId, _id, _level);
+                    }
                 } else {
                     r = {result:'error', errorMsg:'Error or not found', status:200};
                     console.log("Error="+err);
