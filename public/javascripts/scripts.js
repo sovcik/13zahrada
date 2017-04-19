@@ -12,14 +12,15 @@ function initAdmin(){
             if (rptDate.val().trim() != '' && rptPIN.val().trim() != '') {
                 console.log("Requesting PIN report");
                 $.post("/admin", {cmd: 'createReport', pin:rptPIN.val(), pinDate:rptDate.val()}, function (res) {
-                    console.log(JSON.stringify(res));
+                    $("#pinReport").empty();
                     if (res.result == "ok"){
                         console.log("Report received");
-                        $("#pinReport").empty();
-                        //var rpt = JSON.stringify(res.report);
-                        //console.log(rpt);
                         $("#pinReport").html(res.report);
+                    } else {
+                        console.log("Error while creating report");
+                        $("#pinReport").text("Nie sú k dispozícii žiadne údaje pre zadaný dátum a PIN.");
                     }
+
                 })
                 .fail(function () {
                     console.log("Report failed");
@@ -75,10 +76,6 @@ function initAdmin(){
             }
         }
     );
-
-    $('#reportDate').datepicker({
-        dateFormat: 'dd.mm.yy'
-    });
 
     loadPINs();
 
