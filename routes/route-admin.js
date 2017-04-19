@@ -15,7 +15,7 @@ router.post('/', async function(req, res, next) {
     switch (req.body.cmd){
         case 'createReport':
             console.log('Going to create report');
-            utils.createReport(req.body.pin, req.body.pinDate, function(err,r){
+            utils.createReport(req.body.pin, req.body.pinDate, {}, function(err,r){
                 res.json(r);
                 res.end();
             });
