@@ -12,8 +12,8 @@ block content
                     p Zadajte PIN a dátum jeho použitia.
             div(class="row")
                 div(class="col-sm-12")
-                    //label(for="reportDate") Dátum
-                    input(class="input-lg m-right-10" id="reportDate" type='date' name="reportDate")
+                    - var today=new Date().toISOString().substr(0,10);
+                    input(class="input-lg m-right-10" id="reportDate" type='date' name="reportDate" value=today)
                     input(class="input-lg m-right-10" id="reportPin" type='text' name="reportPin" placeholder="zadajte PIN")
                     button(id="createReport" class="btn-lg btn-primary") Vytvor report
             div(class="row")
