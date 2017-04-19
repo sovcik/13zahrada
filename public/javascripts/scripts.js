@@ -77,6 +77,8 @@ function initAdmin(){
         }
     );
 
+    $("#reportDate").val(new Date().toLocaleDateString());
+
     loadPINs();
 
     console.log("/admin - Initializing completed");
