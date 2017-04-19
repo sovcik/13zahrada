@@ -46,6 +46,11 @@ app.get('/logout', function (req, res, next){
     res.redirect('/login');
 });
 
+app.get('/help', function(req,res,next){
+    console.log("Redirecting to help");
+    res.redirect('https://github.com/sovcik/13zahrada/wiki');
+});
+
 app.get('/',function(req,res,next){
     res.redirect('/hints');
 });
