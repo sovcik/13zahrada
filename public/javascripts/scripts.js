@@ -76,6 +76,10 @@ function initAdmin(){
         }
     );
 
+    $('#reportDate').datepicker({
+        dateFormat: 'dd.mm.yy'
+    });
+
     loadPINs();
 
     console.log("/admin - Initializing completed");

@@ -1,44 +1,45 @@
 extends layout
 
 block content
-    div(class="container page")
+    div(class="container")
         div(class="row col-sm-12")
             h1= title
-        hr
-        div(id="report-page")
-            div(class="row col-sm-12")
-                p Zadajte PIN a dátum jeho použitia.
+
+        div(id="report-page" class="subPage row col-sm-12")
             div(class="row")
-                div(class="col-sm-4")
-                    label(for="reportDate") Dátum
-                    input(class="input-lg" id="reportDate" type='date' name="reportDate")
-                div(class="col-sm-4")
-                    label(for="reportPin") PIN
-                    input(class="input-lg" id="reportPin" type='text' name="reportPin")
-                div(class="col-sm-4")
+                div(class="col-sm-12")
+                    h4 Report využitia nápovied
+                    p Zadajte PIN a dátum jeho použitia.
+            div(class="row")
+                div(class="col-sm-12")
+                    //label(for="reportDate") Dátum
+                    input(class="input-lg m-right-10" id="reportDate" type='date' name="reportDate")
+                    input(class="input-lg m-right-10" id="reportPin" type='text' name="reportPin" placeholder="zadajte PIN")
                     button(id="createReport" class="btn-lg btn-primary") Vytvor report
             div(class="row")
                 div(class="col-sm-12")
-                    div(id="pinReport")
+                    div(id="pinReport" class="m10")
                         p Tu sa zobrazí report...
-        hr
-        div(id="pin-page" class="row col-sm-12")
+
+        div(id="pin-page" class="row col-sm-12 subPage")
+            h4 Aktívne PINy
             p Toto je zoznam aktuálne aktívnych PINov.
-            div(id="active-pins")
             div(class="row")
-                div(class="col-sm-4")
-                    input(class="input-lg" id="newPin" type='text', placeholder='nový PIN' name='newPin' maxlength=10)
-                div(class="col-sm-4")
-                    button(id="saveNewPin" class="btn-lg btn-primary") Pridať nový aktívny PIN
+                div(class="col-sm-8")
+                    input(class="input-lg m-right-10" id="newPin" type='text', placeholder='nový PIN' name='newPin' maxlength=10)
+                    button(id="saveNewPin" class="btn-lg btn-primary m-right-10") Pridať nový aktívny PIN
                 div(class="col-sm-4")
                     span(id="addPinStatus" class="statusMsg text-warning")
-        hr
-        div(id="hint-page" class="row col-sm-12")
+            div(class="row")
+                div(id="active-pins" class="col-sm-12 m10")
+                    p Žiadne aktívne PINy...
+        div(id="hint-page" class="row col-sm-12 subPage")
+            h4 Nápovedy
             div(class="row")
                 div(class="col-sm-12")
                     p Tu môžete modifikovať nápovedy pre 13. záhradu
-                    textarea(id="newHintsText" rows="20" cols="70" placeholder="Nové nápovedy vložte sem a kliknite Uložiť.")
-            div(class="row")
+                    textarea(id="newHintsText" class="form-control" rows="20" placeholder="Nové nápovedy vložte sem a kliknite Uložiť.")
+            div(class="row m10")
                 div(class="col-sm-4")
                     button(id="saveHints" class="btn-lg btn-primary") Uložiť nové nápovedy
                 div(class="col-sm-8")

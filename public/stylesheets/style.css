@@ -1,20 +1,4 @@
 
-/*
-body, input, button {
-    padding: 10pt;
-    font: calc(14pt "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-    color: #00B7FF;
-}
-
-option {
-    padding-top: 10pt;
-    padding-bottom: 10pt;
-}
-
-*/
 .hint {
     padding-top: 10pt;
 }
@@ -72,9 +56,27 @@ th {
 }
 
 .page {
-    max-width: 800px;
+    max-width: 900px;
     margin-top: 20pt;
     margin-bottom: 20pt;
     border-top-width: thick;
     border-color: darkgray;
+}
+
+.subPage {
+    margin-top: 10pt;
+    margin-bottom: 20pt;
+    border-top: 1px solid darkgray;
+}
+
+label {
+    margin-right: 5pt;
+}
+
+.m10{
+    margin-top: 10pt;
+}
+
+.m-right-10{
+    margin-right: 10pt;
 }
